@@ -13,19 +13,21 @@ const wp=(f,i)=>{if(!i)return 0;const s=f.split(' ')[1]=='w'?1:-1;return s*(i.t=
 function Board(el){
  const o={g:new Chess(),flip:false,sel:null,last:null,lock:false,onMove:null};
  o.set=f=>{o.g=new Chess(f||START);o.sel=null;o.last=null;o.draw()};
- o.draw=()=>{el.innerHTML='';const bd=o.g.board(),tg=o.sel?o.g.moves({square:o.sel,verbose:true}).map(m=>m.to):[];
+ o.draw=()=>{el.innerHTML='';const bd=o.g.board(),tg=o.sel?o.mv(o.sel).map(m=>m.to):[];
   for(let r=0;r<8;r++)for(let f=0;f<8;f++){const rr=o.flip?7-r:r,ff=o.flip?7-f:f,sq='abcdefgh'[ff]+(8-rr),p=bd[rr][ff],d=document.createElement('div');
    d.className='sq '+((rr+ff)%2?'d':'l')+(sq==o.sel?' sel':'')+(o.last&&(o.last.from==sq||o.last.to==sq)?' last':'')+(tg.includes(sq)?(p?' cap':' tg'):'');
    if(p){const i=new Image();i.src='pieces/'+p.color+p.type.toUpperCase()+'.svg';d.appendChild(i)}
    d.onclick=()=>o.tap(sq);el.appendChild(d)}};
+ o.mv=s=>o.g.moves({verbose:true}).filter(m=>m.from==s);
  o.tap=sq=>{if(o.lock)return;const g=o.g,p=g.get(sq);
-  if(o.sel&&g.moves({square:o.sel,verbose:true}).some(m=>m.to==sq)){const m=g.move({from:o.sel,to:sq,promotion:'q'});o.sel=null;o.last=m;o.draw();o.onMove&&o.onMove(m);return}
-  o.sel=p&&p.color==g.turn()?sq:null;o.draw()};
+  if(o.sel){const t=o.mv(o.sel).find(m=>m.to==sq);if(t){const m=g.move({from:o.sel,to:sq,promotion:'q'});if(m){o.sel=null;o.last=m;o.draw();o.onMove&&o.onMove(m);return}}}
+  if(p&&p.color!=g.turn()){o.sel=null;o.draw();say('Sekarang giliran '+(g.turn()=='w'?'Putih':'Hitam'));return}
+  o.sel=p?sq:null;o.draw();if(p&&!o.mv(sq).length)say('Bidak ini tidak punya langkah legal sekarang')};
  o.back=()=>{o.g.undo();o.last=null;o.draw()};
  return o}
 
 const E={w:null,run:false,p:null,res:null,last:null,onInfo:null,
- init(){this.w=new Worker('vendor/'+SF_JS);this.w.onmessage=e=>this.msg(String(e.data));this.w.postMessage('uci');this.w.postMessage('setoption name Hash value 64')},
+ init(){this.w=new Worker('vendor/'+SF_JS);this.w.onmessage=e=>this.msg(String(e.data));this.w.onerror=e=>say('Engine gagal dimuat: '+(e.message||'file Stockfish tidak ketemu'));this.w.postMessage('uci');this.w.postMessage('setoption name Hash value 64')},
  msg(l){if(l.startsWith('info')&&l.includes(' score ')){const m=l.match(/depth (\d+).*? score (cp|mate) (-?\d+).*? pv (\S+)/);if(m){this.last={d:+m[1],t:m[2],v:+m[3],pv:m[4]};this.onInfo&&this.onInfo(this.last)}}
   else if(l.startsWith('bestmove')){this.run=false;const r=this.res;this.res=null;r&&r({...this.last,best:l.split(' ')[1]})}},
  stop(){this.run&&this.w.postMessage('stop')},
