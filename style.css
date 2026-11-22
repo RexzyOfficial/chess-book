@@ -8,4 +8,6 @@ nav{display:flex;position:sticky;top:0;background:#262421;z-index:5}nav button{f
 #st{padding:10px;font-weight:600;min-height:44px}#ct{padding:0 10px;display:flex;flex-wrap:wrap;gap:6px}#pn{padding:10px}
 button,select,textarea{background:#3a3835;color:#eee;border:1px solid #555;border-radius:6px;padding:8px 12px;font:inherit}
 textarea{width:100%}button.row{display:block;width:100%;text-align:left;margin:4px 0}h3{margin:14px 0 4px;color:#9c6}
-.r{padding:6px;border-bottom:1px solid #333}.bl{color:#f55}.mi{color:#f95}.in{color:#fc5}
+.r{padding:6px;border-bottom:1px solid #333}.bl{color:#f55}.mi{color:#f95}.in{color:#fc5}#bd{grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(8,minmax(0,1fr))}
+.sq{min-width:0;min-height:0;overflow:hidden}
+.sq img{display:block;width:100%;height:100%}
