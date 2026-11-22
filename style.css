@@ -1,16 +1,13 @@
 *{box-sizing:border-box}body{margin:0 auto;background:#161512;color:#ddd;font:15px system-ui,sans-serif;max-width:560px;padding-bottom:40px}
 nav{display:flex;position:sticky;top:0;background:#262421;z-index:5}nav button{flex:1;padding:12px 2px;background:none;border:0;color:#aaa;font-size:13px;border-bottom:2px solid transparent}nav .on{color:#fff;border-color:#7fa650}
-#bd{display:grid;grid-template-columns:repeat(8,1fr);width:100%;aspect-ratio:1;user-select:none}
-.sq{position:relative;display:flex}.sq img{width:100%;height:100%;pointer-events:none}.l{background:#f0d9b5}.d{background:#b58863}
+#bd{display:flex;flex-wrap:wrap;width:100%;user-select:none}
+.sq{flex:0 0 12.5%;width:12.5%;height:0;padding-bottom:12.5%;position:relative;overflow:hidden}
+.sq img{position:absolute;left:0;top:0;width:100%;height:100%;display:block;pointer-events:none}
+.l{background:#f0d9b5}.d{background:#b58863}
 .last{box-shadow:inset 0 0 0 100px rgba(155,199,0,.41)}.sel{box-shadow:inset 0 0 0 100px rgba(20,85,30,.5)}
 .tg::after{content:"";position:absolute;inset:35%;border-radius:50%;background:rgba(20,85,30,.5)}
 .cap::after{content:"";position:absolute;inset:3%;border-radius:50%;border:5px solid rgba(20,85,30,.5)}
 #st{padding:10px;font-weight:600;min-height:44px}#ct{padding:0 10px;display:flex;flex-wrap:wrap;gap:6px}#pn{padding:10px}
 button,select,textarea{background:#3a3835;color:#eee;border:1px solid #555;border-radius:6px;padding:8px 12px;font:inherit}
 textarea{width:100%}button.row{display:block;width:100%;text-align:left;margin:4px 0}h3{margin:14px 0 4px;color:#9c6}
-.r{padding:6px;border-bottom:1px solid #333}.bl{color:#f55}.mi{color:#f95}.in{color:#fc5}#bd{grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(8,minmax(0,1fr))}
-.sq{min-width:0;min-height:0;overflow:hidden}
-.sq img{display:block;width:100%;height:100%}
-#bd{display:flex!important;flex-wrap:wrap;aspect-ratio:auto!important;height:auto!important}
-.sq{flex:0 0 12.5%!important;width:12.5%!important;height:0!important;padding-bottom:12.5%;position:relative;display:block!important;overflow:hidden}
-.sq img{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+.r{padding:6px;border-bottom:1px solid #333}.bl{color:#f55}.mi{color:#f95}.in{color:#fc5}
