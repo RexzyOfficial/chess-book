@@ -1,0 +1,1 @@
+const SF_JS="stockfish-19-lite-single.js";
